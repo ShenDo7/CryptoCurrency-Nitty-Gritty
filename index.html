@@ -4,156 +4,121 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Crypto Project</title>
+  <title>CryptoCurrency Nitty Gritty</title>
 
-  <!-- Bootstrap -->
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 
-
-  <!-- Our CSS  -->
-  <link rel="stylesheet" href="assets/css/bootswatch.css">
+  <!-- Our CSS -->
   <link rel="stylesheet" href="assets/css/style.css">
-
-  <!-- animate.css -->
-
 </head>
 
-<!--start of JUMBO -->
-
 <body>
-  <div class="jumbotron jumbotron-fluid">
-    <div class="container">
-      <h1 class="animated fadeInDown" id="title">Crypto </h1>
-      <h7 class="animated bounce">Easy to use inferface to get all the info you need on Crypto Currency</h7>
+  <!-- Header -->
+  <div class="jumbotron bg-dark text-white py-5">
+    <div class="container text-center">
+      <h1 class="animate__animated animate__fadeInDown display-3 fw-bold" id="title">CryptoCurrency Nitty Gritty</h1>
+      <p class="animate__animated animate__bounce lead">Easy to use interface to get all the info you need on Cryptocurrency</p>
     </div>
   </div>
-  <!-- end of JUMBO -->
 
-  <!-- start of nav -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand">Search for info on Crypto</a>
-    <div class="collapse navbar-collapse" id="navbarColor01">
-      <ul class="navbar-nav mr-auto">
-      </ul>
-      <h6 id="alert"> </h6>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" id="searchInput" type="text" for="searchBtn" placeholder="Search">
-        <button class="btn btn-secondary my-2 my-sm-0" id="searchBtn" type="submit">Search</button>
-
-        <button class="btn btn-secondary my-2 my-sm-0" id="clearBtn" type="submit">Clear</button>
-
-        <button class="btn btn-secondary my-2 my-sm-0" id="randomBtn" type="submit">Random</button>
-      </form>
+  <!-- Navigation / Search -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+    <div class="container">
+      <span class="navbar-brand">Search for Crypto Info</span>
+      <div class="d-flex gap-2">
+        <input class="form-control" id="searchInput" type="text" placeholder="e.g. bitcoin, ethereum">
+        <button class="btn btn-light" id="searchBtn" type="button">Search</button>
+        <button class="btn btn-outline-light" id="clearBtn" type="button">Clear</button>
+        <button class="btn btn-outline-light" id="randomBtn" type="button">Random</button>
+      </div>
     </div>
   </nav>
-  <br>
-  <br>
-  <!-- end of nav -->
 
-  <div class="container">
-    <div id="alertDiv"> </div>
-    <!-- Card Body where info goes -->
-    <div id="cryptoInformation"> </div>
+  <!-- Alert Area -->
+  <div class="container mt-3">
+    <div id="alertDiv"></div>
+  </div>
 
-    <div class="card mb-3">
+  <!-- Crypto Results -->
+  <div class="container my-4">
+    <div id="cryptoInformation" class="row g-4"></div>
+  </div>
 
-      <h3 id="cyrpto-name-input" class="card-header">Why Crypto?</h3>
-
-
+  <!-- Info Section -->
+  <div class="container my-5">
+    <div class="card shadow">
+      <h3 class="card-header bg-secondary text-white">Why Crypto?</h3>
       <div class="card-body">
-        <div class="flex-center mb-5">
-
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/ZO7INzyM51U" frameborder="0"
-            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div class="ratio ratio-16x9 mb-4" style="max-width: 560px; margin: 0 auto;">
+          <iframe src="https://www.youtube.com/embed/ZO7INzyM51U" 
+            title="Crypto Explainer Video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen></iframe>
         </div>
-        <!-- End of Image -->
 
-        <p class="card-text" id="imageText">A beginners guide to CryptoCurrency. Get all the data you need to get
-          started without feeling overwhemled.
+        <p class="card-text">A beginners guide to CryptoCurrency. Get all the data you need to get started without feeling overwhelmed.</p>
+        
+        <p>So what exactly is CryptoCurrency anyway? It is a digital currency in which encryption techniques are used to regulate the generation of units of currency and verify the transfer of funds, operating independently of a central bank.</p>
 
-          <p>So what exactly is CryptoCurreny anways? It is a digital currency in which encryption techniques are used
-            to regulate the
-            generation
-            of units of currency and verify the transfer of funds, operating independently of a central bank.</p>
-          <br>
-
-
-          <p>Here is a list of a few companies who currenly accepts CryptoCurrency:
-            <br>
-            <br>
-            1. Dish
-            <br>
-            2. AirVPN
-            <br>
-            3. Microsoft
-            <br>
-            4. Subway
-            <br>
-            5. Shopify
-            <br>
-            6. Namecheap
-            <br>
-            7. Newegg
-            <br>
-            8. Overstock
-            <br>
-            9. CheapAir
-            <br>
-            10. AXA
-            <br>
-            11. Virgin Galactic
-            <br>
-            12. 4chan
-            <br>
-            13. BigFishGames
-            <br>
-            14. MovieTickets
-            <br>
-            15. T-Mobile
-          </p>
-        </p>
+        <h5 class="mt-4">Companies accepting CryptoCurrency:</h5>
+        <div class="row">
+          <div class="col-md-4">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Microsoft</li>
+              <li class="list-group-item">PayPal</li>
+              <li class="list-group-item">Shopify</li>
+              <li class="list-group-item">Newegg</li>
+              <li class="list-group-item">Overstock</li>
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Tesla</li>
+              <li class="list-group-item">Twitch</li>
+              <li class="list-group-item">AT&T</li>
+              <li class="list-group-item">Dish Network</li>
+              <li class="list-group-item">Virgin Galactic</li>
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">AMC Theatres</li>
+              <li class="list-group-item">Gucci</li>
+              <li class="list-group-item">Balenciaga</li>
+              <li class="list-group-item">Ferrari</li>
+              <li class="list-group-item">Whole Foods</li>
+            </ul>
+          </div>
+        </div>
       </div>
-      <button class="btn btn-secondary my-2 my-sm-0" id="gifBtn" type="submit">Grab me some gifs please</button>
 
-      <div id="gifsAppearHere"> </div>
-
-      <div class="card-footer text-muted">
-        Copyright &copy;
+      <div class="card-footer">
+        <button class="btn btn-primary" id="gifBtn" type="button">🎉 Get Crypto GIFs</button>
+        <div id="gifsAppearHere" class="d-flex flex-wrap gap-2 mt-3"></div>
       </div>
     </div>
   </div>
-  <!-- End of card body -->
-  <!-- end of JUMBO -->
 
-  <script src="https://www.gstatic.com/firebasejs/6.3.3/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/6.3.3/firebase-database.js"></script>
+  <!-- Footer -->
+  <footer class="bg-dark text-white text-center py-4 mt-5">
+    <div class="container">
+      <p class="mb-1"><strong>CryptoCurrency Nitty Gritty</strong></p>
+      <p class="text-muted mb-0">Team: Rodney James, Jay Guevara, Nicholas Leone</p>
+    </div>
+  </footer>
 
-  <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
     crossorigin="anonymous"></script>
 
+  <!-- Our JS -->
   <script src="assets/javascript/javascript.js"></script>
-
 </body>
-<br>
-<br>
-
-<footer class="footer">
-  <div class="content has-text-centered">
-    <p>
-      <strong>Project One </strong>
-    </p>
-  </div>
-</footer>
-
 
 </html>

@@ -1,244 +1,190 @@
-//Declaring all global variables to be used in the code
-var totalSupply = 0;
-var circulatingSupply = 0;
-var currentPrice = 0;
-var exchange = "";
-var image = "";
-var homepage = "";
-var description = "";
-var name = "";
+// CryptoCurrency Nitty Gritty - Modern JavaScript (no jQuery required)
 
-var name = "";
-var symbol = "";
-var description = "";
+// API endpoints
+const COINGECKO_API = 'https://api.coingecko.com/api/v3';
+const GIPHY_API_KEY = 'BkaUZZWcFij6J7AoQj3WtPb1R2p9O6V9';
 
-function generateCryptoInformation() {
-    var cryptoInfo = $("<div>").attr("id", "information");
+// DOM Elements
+const searchInput = document.getElementById('searchInput');
+const searchBtn = document.getElementById('searchBtn');
+const clearBtn = document.getElementById('clearBtn');
+const randomBtn = document.getElementById('randomBtn');
+const gifBtn = document.getElementById('gifBtn');
+const cryptoInformation = document.getElementById('cryptoInformation');
+const alertDiv = document.getElementById('alertDiv');
+const gifsAppearHere = document.getElementById('gifsAppearHere');
 
-    var cryptoName = $("<h3>").attr("id", "card-name-input").addClass("card-header").text(name);
-
-    var cryptoTitleBody = $("<div>").addClass("card-body");
-    var specialTitle = $("<h5>").addClass("card-title").text(symbol);
-
-    cryptoTitleBody.append(specialTitle);
-
-    var cryptoInfoImg = $("<img>").attr("id", "cryptoImg").attr("src", image);
-    cryptoInfoImg.attr("style", "height: 200px; width: 200px; display: block;");
-    cryptoInfoImg.attr("alt", "Card Image");
-
-    var cryptoCardBody = $("<div>").addClass("card-body");
-    var cardPara = $("<p>").addClass("card-text").attr("id", "imageText").html(description);
-
-    cryptoCardBody.append(cardPara);
-
-    var cryptoList = $("<ul>").addClass("list-group list-group-flush");
-
-    var price = $("<li>").attr("id", "current-price").addClass("list-group-item").text("Current Price: " + currentPrice);
-    var circulating = $("<li>").attr("id", "circulating-supply").addClass("list-group-item").text("Circulating Supply: " + circulatingSupply);
-    var total = $("<li>").attr("id", "total-supply").addClass("list-group-item").text("Total Supply: " + totalSupply);
-    var homepageLink = $("<li>").attr("id", "homepage").addClass("list-group-item").html(`Visit Us @ <a href ='${homepage}'target = "_blank">${homepage}</a>`);
-    var exchangeLink = $("<li>").attr("id", "exchange").addClass("list-group-item").html(`Buy here @ <a href ='${exchange}'target = "_blank">${exchange}</a>`);
-
-    cryptoList.append(price);
-    cryptoList.append(circulating);
-    cryptoList.append(total);
-    cryptoList.append(homepageLink);
-    cryptoList.append(exchangeLink);
-
-    cryptoInfo.append(cryptoName);
-    cryptoInfo.append(cryptoTitleBody);
-    cryptoInfo.append(cryptoInfoImg);
-    cryptoInfo.append(cryptoCardBody);
-    cryptoInfo.append(cryptoList);
-
-    $("#cryptoInformation").prepend(cryptoInfo);
-
+// Generate crypto card HTML
+function createCryptoCard(data) {
+  const card = document.createElement('div');
+  card.className = 'col-lg-6';
+  card.innerHTML = `
+    <div class="card h-100 shadow-sm">
+      <div class="card-header bg-primary text-white d-flex align-items-center gap-3">
+        <img src="${data.image}" alt="${data.name}" style="width: 40px; height: 40px; border-radius: 50%;">
+        <div>
+          <h5 class="mb-0">${data.name}</h5>
+          <small class="text-uppercase">${data.symbol}</small>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-text small">${data.description ? data.description.substring(0, 300) + '...' : 'No description available.'}</p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item d-flex justify-content-between">
+          <span>💰 Current Price:</span>
+          <strong>$${data.currentPrice?.toLocaleString() || 'N/A'}</strong>
+        </li>
+        <li class="list-group-item d-flex justify-content-between">
+          <span>📊 Circulating Supply:</span>
+          <strong>${data.circulatingSupply?.toLocaleString() || 'N/A'}</strong>
+        </li>
+        <li class="list-group-item d-flex justify-content-between">
+          <span>📈 Total Supply:</span>
+          <strong>${data.totalSupply?.toLocaleString() || 'N/A'}</strong>
+        </li>
+      </ul>
+      <div class="card-footer">
+        ${data.homepage ? `<a href="${data.homepage}" target="_blank" class="btn btn-outline-primary btn-sm me-2">🌐 Website</a>` : ''}
+        ${data.exchange ? `<a href="${data.exchange}" target="_blank" class="btn btn-success btn-sm">💱 Buy Now</a>` : ''}
+      </div>
+    </div>
+  `;
+  return card;
 }
 
-for (var i = 0; i < sessionStorage.length; i++) {
-    var obj = JSON.parse(sessionStorage.getItem(sessionStorage.key(i)));
-
-    var cryptoInfo = $("<div>").attr("id", "information");
-    var cryptoName = $("<h3>").attr("id", "card-name-input").addClass("card-header").text(obj.nameInfo);
-
-    var cryptoTitleBody = $("<div>").addClass("card-body");
-    var specialTitle = $("<h5>").addClass("card-title").text(obj.symbol);
-
-    cryptoTitleBody.append(specialTitle);
-
-    var cryptoInfoImg = $("<img>").attr("id", "cryptoImg").attr("src", obj.image);
-    cryptoInfoImg.attr("style", "height: 200px; width: 200px; display: block;");
-    cryptoInfoImg.attr("alt", "Card Image");
-
-    var cryptoCardBody = $("<div>").addClass("card-body");
-    var cardPara = $("<p>").addClass("card-text").attr("id", "imageText").html(obj.description);
-
-    cryptoCardBody.append(cardPara);
-
-    var cryptoList = $("<ul>").addClass("list-group list-group-flush");
-
-    var price = $("<li>").attr("id", "current-price").addClass("list-group-item").text("Current Price: " + obj.currentPrice);
-    var circulating = $("<li>").attr("id", "circulating-supply").addClass("list-group-item").text("Circulating Supply: " + obj.circulatingSupply);
-    var total = $("<li>").attr("id", "total-supply").addClass("list-group-item").text("Total Supply: " + obj.totalSupply);
-    var homepageLink = $("<li>").attr("id", "homepage").addClass("list-group-item").html(`Visit Us @ <a href ='${obj.homepage}'target = "_blank">${obj.homepage}</a>`);
-    var exchangeLink = $("<li>").attr("id", "exchange").addClass("list-group-item").html(`Buy here @ <a href ='${obj.exchange}'target = "_blank">${obj.exchange}</a>`);
-
-    cryptoList.append(price);
-    cryptoList.append(circulating);
-    cryptoList.append(total);
-    cryptoList.append(homepageLink);
-    cryptoList.append(exchangeLink);
-
-    cryptoInfo.append(cryptoName);
-    cryptoInfo.append(cryptoTitleBody);
-    cryptoInfo.append(cryptoInfoImg);
-    cryptoInfo.append(cryptoCardBody);
-    cryptoInfo.append(cryptoList);
-
-    $("#cryptoInformation").prepend(cryptoInfo);
-
+// Show alert message
+function showAlert(message, type = 'warning') {
+  alertDiv.innerHTML = `
+    <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+      ${message}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+  `;
+  setTimeout(() => alertDiv.innerHTML = '', 5000);
 }
 
-//Listening for an on click event on elements with an id of 'searchBtn'.
-$("#searchBtn").on("click", function () {
-    event.preventDefault();
+// Fetch crypto data from CoinGecko
+async function fetchCryptoData(cryptoId) {
+  try {
+    const response = await fetch(`${COINGECKO_API}/coins/${cryptoId}`);
+    
+    if (!response.ok) {
+      throw new Error('Cryptocurrency not found');
+    }
+    
+    const data = await response.json();
+    
+    const cryptoData = {
+      name: data.name,
+      symbol: data.symbol,
+      description: data.description?.en || '',
+      currentPrice: data.market_data?.current_price?.usd,
+      circulatingSupply: data.market_data?.circulating_supply,
+      totalSupply: data.market_data?.total_supply,
+      homepage: data.links?.homepage?.[0] || '',
+      image: data.image?.large || '',
+      exchange: data.tickers?.[0]?.trade_url || ''
+    };
 
-    //Creating variable that has a value equal to an element with an id of 'searchInput' value
-    var crypto = $("#searchInput").val().toLowerCase().trim();
-    // replaces "spaces" with "-" for user input in search box
-    crypto = crypto.replace(" ", "-");
+    // Save to session storage
+    const keyName = `${cryptoData.name}-information`;
+    sessionStorage.setItem(keyName, JSON.stringify(cryptoData));
+
+    // Create and prepend card
+    const card = createCryptoCard(cryptoData);
+    cryptoInformation.prepend(card);
+
+  } catch (error) {
+    console.error('Error fetching crypto data:', error);
+    showAlert('Please enter a valid cryptocurrency name (e.g., bitcoin, ethereum, dogecoin)');
+  }
+}
+
+// Fetch random crypto
+async function fetchRandomCrypto() {
+  try {
+    const response = await fetch(`${COINGECKO_API}/coins/markets?vs_currency=usd&per_page=100`);
+    const coins = await response.json();
     
-    $("#searchInput").val("");
+    const randomIndex = Math.floor(Math.random() * coins.length);
+    const randomCoin = coins[randomIndex];
     
-    var queryURLInformation = "https://api.coingecko.com/api/v3/coins/" + crypto;
-    var queryURLExchange = "https://api.coingecko.com/api/v3/exchanges/Binance/tickers?coin_ids=" + crypto;
-    // ajax call to get data from API
-    $.ajax({
-        url: queryURLInformation, queryURLExchange, 
-        method: "GET"
-    }).then(function (response) {
-        console.log(response);
-        // targeting data from a specific area off the array
-        name = response.id;
-        symbol = response.symbol;
-        description = response.description.en;
-        currentPrice = response.market_data.current_price.usd;
-        circulatingSupply = response.market_data.circulating_supply;
-        totalSupply = response.market_data.total_supply;
-        homepage = response.links.homepage[0];
-        image = response.image.large;
-        exchange = response.tickers[0].trade_url
-        
-        var information = {
-            "nameInfo": name,
-            "symbol": symbol,
-            "description": description,
-            "currentPrice": currentPrice,
-            "circulatingSupply": circulatingSupply,
-            "totalSupply": totalSupply,
-            "homepage": homepage,
-            "image": image,
-            "exchange": exchange
-            
-        };
-        
-        var keyName = name + "-information"
-        sessionStorage.setItem(keyName, JSON.stringify(information));
-        generateCryptoInformation();
-        
-    })
-    .catch(function (error) {
-        
-        var alertModal = $("<div>").addClass("alert alert-warning").attr("role", "alert").html("Please enter in a valid Cryptocurrency")
-        $("#alertDiv").append(alertModal);
-        
-        setTimeout(clearAlert, 5000);
-        
-        function clearAlert() {
-            $("#alertDiv").empty();
-            
-        }
-    })
+    await fetchCryptoData(randomCoin.id);
+  } catch (error) {
+    console.error('Error fetching random crypto:', error);
+    showAlert('Error fetching random cryptocurrency. Please try again.');
+  }
+}
+
+// Fetch GIF from Giphy
+async function fetchCryptoGif() {
+  try {
+    const response = await fetch(`https://api.giphy.com/v1/gifs/random?api_key=${GIPHY_API_KEY}&tag=cryptocurrency`);
+    const data = await response.json();
+    
+    const img = document.createElement('img');
+    img.src = data.data.images.fixed_height_small.url;
+    img.alt = 'Crypto GIF';
+    img.className = 'rounded';
+    img.style.height = '100px';
+    
+    gifsAppearHere.appendChild(img);
+  } catch (error) {
+    console.error('Error fetching GIF:', error);
+  }
+}
+
+// Load saved searches from session storage
+function loadSavedSearches() {
+  for (let i = 0; i < sessionStorage.length; i++) {
+    const key = sessionStorage.key(i);
+    if (key.endsWith('-information')) {
+      const data = JSON.parse(sessionStorage.getItem(key));
+      const card = createCryptoCard(data);
+      cryptoInformation.appendChild(card);
+    }
+  }
+}
+
+// Event Listeners
+searchBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  const crypto = searchInput.value.toLowerCase().trim().replace(/\s+/g, '-');
+  
+  if (!crypto) {
+    showAlert('Please enter a cryptocurrency name');
+    return;
+  }
+  
+  fetchCryptoData(crypto);
+  searchInput.value = '';
 });
 
-$("#clearBtn").on("click", function () {
-    event.preventDefault();
-    
-    sessionStorage.clear();
-    $("#cryptoInformation").empty();
-    
-})
-
-$("#gifBtn").on("click", function () {
-    event.preventDefault();
-    
-    var queryURLGify = "https://api.giphy.com/v1/gifs/random?api_key=BkaUZZWcFij6J7AoQj3WtPb1R2p9O6V9&tag=cryptocurrency";
-    
-    $.ajax({
-        url: queryURLGify, 
-        method: "GET"
-    }).then(function (response) {
-        console.log(response);
-
-        var gifyImage = $("<img>").attr("src", response.data.images.fixed_height_small.url).attr("id", "cryptoGif");
-
-        $("#gifsAppearHere").append(gifyImage);
-
-    })
+// Allow Enter key to search
+searchInput.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    searchBtn.click();
+  }
 });
 
-$("#randomBtn").on("click", function(){
-    event.preventDefault();
-    var queryURLCoins = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd"
-
-    $.ajax({
-        url: queryURLCoins,
-        method: "GET"
-    }).then(function (response) {
-        var length = Math.floor(Math.random()* 100);
-        console.log(length);
-
-        console.log(response);
-
-        var crypto = response[length].id;
-        
-        var queryURLInformation = "https://api.coingecko.com/api/v3/coins/" + crypto;
-        var queryURLExchange = "https://api.coingecko.com/api/v3/exchanges/Binance/tickers?coin_ids=" + crypto;
-
-        $.ajax({
-            url: queryURLInformation, queryURLExchange, 
-            method: "GET"
-        }).then(function (response) {
-
-            name = response.id;
-            symbol = response.symbol;
-            description = response.description.en;
-
-            currentPrice = response.market_data.current_price.usd;
-            circulatingSupply = response.market_data.circulating_supply;
-            totalSupply = response.market_data.total_supply;
-            homepage = response.links.homepage[0];
-            image = response.image.large;
-            exchange = response.tickers[0].trade_url
-
-            var information = {
-                "nameInfo": name,
-                "symbol": symbol,
-                "description": description,
-                "currentPrice": currentPrice,
-                "circulatingSupply": circulatingSupply,
-                "totalSupply": totalSupply,
-                "homepage": homepage,
-                "image": image,
-                "exchange": exchange
-
-            };
-            
-            var keyName = name + "-information"
-            sessionStorage.setItem(keyName, JSON.stringify(information));
-            generateCryptoInformation();
-
-        });
-    });
+clearBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  sessionStorage.clear();
+  cryptoInformation.innerHTML = '';
+  gifsAppearHere.innerHTML = '';
 });
 
+randomBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  fetchRandomCrypto();
+});
+
+gifBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  fetchCryptoGif();
+});
+
+// Initialize - load any saved searches
+document.addEventListener('DOMContentLoaded', loadSavedSearches);
